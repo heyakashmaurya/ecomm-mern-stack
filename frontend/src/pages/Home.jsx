@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import CollectionCard from '../components/CollectionCard'
 import OurPolicy from '../components/OurPolicy'
 import NewsLetter from '../components/NewsLetter'
-import Footer from '../components/footer'
+import Footer from '../components/Footer'
 
 
 const Home = () => {
