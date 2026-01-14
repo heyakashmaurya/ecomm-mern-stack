@@ -7,6 +7,7 @@ import Orders from './pages/Orders'
 import Login from './pages/Login'
 import axios from "axios"
 import { adminDataContext } from './context/AdminContext'
+import { ToastContainer, toast } from 'react-toastify';
 
 axios.defaults.withCredentials = true;
 
@@ -24,6 +25,7 @@ const App = () => {
       <Route path='/login' element={<Login/>}/>
       
     </Routes>
+    <ToastContainer />
     </>
     }
     </>

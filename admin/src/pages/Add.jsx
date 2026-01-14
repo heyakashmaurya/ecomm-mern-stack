@@ -4,6 +4,9 @@ import Sidebar from '../components/Sidebar'
 import uploadimage from "../assets/uploadimage.png"
 import { authDataContext } from '../context/AuthContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+import Loading from '../components/Loading'
+
 
 const Add = () => {
   const [image1, setImage1] = useState(false)
@@ -17,9 +20,12 @@ const Add = () => {
   const [subCategory, setSubCategory] = useState('TopWear')
   const [bestseller, setbestSeller] = useState(false)
   const [sizes, setSizes] = useState([])
+  const [loading, setLoading] = useState(false)
   const {serverUrl} = useContext(authDataContext)
 
   const handleAddProduct = async (e) => {
+    
+    setLoading(true)
         e.preventDefault()
         try {
           let formdata = new FormData()
@@ -37,6 +43,7 @@ const Add = () => {
 
           let result = await axios.post(serverUrl + "/api/product/addproduct", formdata, {withCredentials:true, headers: { "Content-Type": "multipart/form-data" }})
           console.log(result.data)
+          setLoading(false)
 
           if(result.data){
             setName("")
@@ -50,19 +57,28 @@ const Add = () => {
             setCategory("Men")
             setSubCategory("TopWear")
           }
+
+          toast.success("Add Product Successfully")
           
         } catch (error) {
           console.log(error)
+              toast.error("Add Product Failed")
+    setLoading(false)
+        }finally{
+          setLoading(false)
         }
   }
 
+
+
+
   return (
-    <div className='w-[100vw] min-h-[100vh] bg-gradient-to-l from-[#32393b] to-[#2d1818] text-white overflow-x-hidden relative'>
+    <div className='w-[100vw] min-h-[100vh] bg-gradient-to-l from-[#32393b] to-[#2d1818]  text-white overflow-x-hidden relative'>
        <Nav/>
        <Sidebar/>
 
 
-       <div className='w-[75%] md:w-[82%] h-[100%] flex items-center justify-start overflow-x-hidden absolute right-0 bottom-[5%] '>
+       <div className='w-[75%] md:w-[82%] h-[100%] flex items-center justify-start overflow-x-hidden pt-15 absolute right-0 bottom-[5%] '>
 
 
         <form  onSubmit={handleAddProduct} className='w-[100%] md:w-[90%] h-[100%] mt-[70px] flex flex-col gap-[30px] py-[60px] md:px-[60px]'>
@@ -160,7 +176,7 @@ const Add = () => {
             </label>
           </div>
 
-          <button className='w-[140px] px-[20px] py-[20px] rounded-xl bg-[#d940de] flex items-center justify-center gap-[10px] text-white active:bg-blue-200  active:text-white active:border-[2px] border-white ' >Add Product</button>
+          <button className='w-[140px] px-[20px] py-[20px] rounded-xl bg-[#d940de] flex items-center justify-center gap-[10px] text-white active:bg-blue-200  active:text-white active:border-[2px] border-white  cursor-pointer' > {loading ? <Loading/> : "Add Product" } </button>
 
         </form>
 
@@ -171,3 +187,5 @@ const Add = () => {
 }
 
 export default Add
+
+

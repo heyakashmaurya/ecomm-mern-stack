@@ -9,12 +9,16 @@ import { authDataContext } from '../context/authContext';
 import { auth, provider } from '../../utils/Firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { userDataContext } from '../context/UserContext';
+import Loading from '../components/Loading';
+import { toast } from 'react-toastify';
+
 
 
 const login = () => {
    const [show, setShow] = useState(false);
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
 
     const {serverUrl} = useContext(authDataContext);
@@ -24,18 +28,26 @@ const login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        
         
         try {
             const result = await axios.post(serverUrl + "/api/auth/login" , {email, password},{withcredentials:true})
             navigate("/")
-            console.log(result.data)
+            
             getCurrentUser();
+            setLoading(false);
         } catch (error) {
             console.log("error in handlelogin " , error.message)
+            toast.error(
+                    error.response?.data?.message || "Invalid email or password");
+        }finally{
+            setLoading(false);
         }
     }
 
     const googleLogin = async ( )=> {
+        setLoading(true)
         try {
             const response = await signInWithPopup(auth, provider)
             console.log(response);
@@ -46,9 +58,18 @@ const login = () => {
             const result = await axios.post(serverUrl + '/api/auth/googlelogin',{name, email}, {withCredentials:true})
             getCurrentUser();
             navigate("/")
+            setLoading(false);
+            toast.success("Login Successful")
+
             console.log(result.data)
         } catch (error) {
             console.log("error in googlesignup  ", error)
+            toast.error("Google login failed" )
+            toast.error(
+      error.response?.data?.message || "Invalid email or password"
+    );
+        }finally{
+            setLoading(false);
         }
     }
   return (
@@ -83,7 +104,7 @@ const login = () => {
                     {!show && <IoEyeOutline className='size-[20px] cursor-pointer absolute right-[5%] bottom-[56%]' onClick={()=> {setShow(prev => !prev)}}/>}
                     {show && <IoEyeOffOutline className='size-[20px] cursor-pointer absolute right-[5%] bottom-[56%] ' onClick={()=> {setShow(prev => !prev)}}/>}
 
-                    <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold cursor-pointer'>Login</button>
+                    <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold cursor-pointer' >{loading ? <Loading/> : "Login"}</button>
 
                     <p>Doesn't have Account?  <span className='text-[#5555f6cf] text-[17px] font-semibold cursor-pointer' onClick={() => navigate("/signup")}> Create New Account</span></p>
                 </div>

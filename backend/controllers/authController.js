@@ -43,6 +43,7 @@ export const  register = async (req, res ) => {
 export const login = async (req , res) => {
     try {
         const {email, password} = req.body;
+        
         let user = await User.findOne({email});
 
         if (!user){
@@ -52,7 +53,7 @@ export const login = async (req , res) => {
         let isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch){
-           return res.status(401).json({message: "Username or Password is incorrect"})
+           return res.status(401).json({message: "Email or Password is incorrect"})
         }
 
         let token = await genToken(user._id);

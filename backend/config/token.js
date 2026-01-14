@@ -17,3 +17,4 @@ export const  genToken1 = async (email) => {
         console.log("gentoken1 error")
     }
 }
+

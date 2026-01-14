@@ -1,10 +1,25 @@
 import React from 'react'
 
-const Title = ({title1, title2}) => {
+function Title({ title1 = '', title2 = '', subtitle = '', align = 'left' }) {
+  const alignItems = align === 'center' ? 'items-center text-center' : 'items-start text-left'
+
   return (
-        <div className=' flex items-center justify-center bg-fuchsia-100 mt-2 shadow-2xl '>
-          <h1 className='md:text-[54px] text-[24px] text-[#1767ef]  font-extrabold  '>{title1}</h1>  <span className='md:text-[54px] text-[24px] text-[#f23800] font-extrabold ml-3 '>{title2}</span>
+    <section className='py-6'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className={`flex flex-col ${alignItems}`}>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight'>
+            <span className='inline-block text-indigo-600 mr-2'>{title1}</span>
+            <span className='inline-block text-pink-500'>{title2}</span>
+          </h2>
+
+          {subtitle && <p className='mt-2 text-sm text-gray-600 max-w-2xl'>{subtitle}</p>}
+
+          <div className={`mt-4 ${align === 'center' ? 'mx-auto' : ''}`}>
+            <div className='w-24 h-1 rounded-full bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400' />
+          </div>
         </div>
+      </div>
+    </section>
   )
 }
 

@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
-import { shopDataContext } from '../context/ShopContext'
-import Title from '../components/Title'
+import React from 'react'
+import LatestCollection from '../components/LatestCollection'
+import Bestseller from '../components/Bestseller'
 
-const Product = () => {
-  let {products} = useContext(shopDataContext)
+export default function Product() {
   return (
-     <Title title1 = "Latest" title2 = "Collections" />
+    <div>
+      <LatestCollection/>
+        <Bestseller/>
+    </div>
   )
 }
-
-export default Product

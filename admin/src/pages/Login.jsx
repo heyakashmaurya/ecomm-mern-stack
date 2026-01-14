@@ -7,6 +7,9 @@ import Logo from "../assets/logo.png"
 import axios from "axios"
 import { useContext } from 'react';
 import { adminDataContext } from '../context/AdminContext';
+import { toast } from 'react-toastify';
+
+import Loading from '../components/Loading';
 
 
 
@@ -15,20 +18,28 @@ const Login = () => {
   const [show, setShow] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false)
   const {serverUrl}  =  useContext(authDataContext)
   let navigate = useNavigate()
   const {adminData , getCurrentAdmin} = useContext(adminDataContext)
 
   const handleLogin = async(e) => {
+    setLoading(true)
     e.preventDefault();
         try {
           const result = await axios.post(serverUrl + "/api/auth/adminlogin", {email, password} , {withCredentials:true})
           console.log(result.data);
+          toast.success("Admin logged in Successfully")
           await getCurrentAdmin();
           navigate('/')
+          setLoading(false)
 
         } catch (error) {
-          console.log("handlelogin error in admin login ")
+          console.log("error in admin login ", error)
+          toast.error(
+                              error.response?.data?.message || "Invalid email or password");
+        }finally{
+          setLoading(false)
         }
       }
   return (
@@ -57,7 +68,7 @@ const Login = () => {
                             {!show && <IoEyeOutline className='size-[20px] cursor-pointer absolute right-[5%] bottom-[50%]' onClick={()=> {setShow(prev => !prev)}}/>}
                             {show && <IoEyeOffOutline className='size-[20px] cursor-pointer absolute right-[5%] bottom-[50%] ' onClick={()=> {setShow(prev => !prev)}}/>}
         
-                            <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold cursor-pointer'>Login</button>
+                            <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold cursor-pointer'>{loading ? <Loading/> : "Login" } </button>
         
                         </div>
                     </form>

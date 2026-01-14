@@ -1,4 +1,4 @@
-import React from 'react';
+
 import s1 from "../assets/s1.jpg"
 import tshirtwomen1 from "../assets/tshirtwomen1.jpg"
 import s3 from "../assets/s3.jpg"
