@@ -16,7 +16,7 @@ let port = process.env.PORT || 5001;
 let app = express();
 app.use(cookieParser())
 app.use(cors({
-    origin: ["https://ecart-frontend-mzdr.onrender.com", "http://localhost:5174"],
+    origin: ["https://ecart-frontend-mzdr.onrender.com", "https://ecart-admin-4hew.onrender.com"],
     credentials:true
 }))
 
