@@ -5,7 +5,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { authDataContext } from '../context/authContext';
+import { authDataContext } from '../context/AuthContext';
 import { auth, provider } from '../../utils/Firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { userDataContext } from '../context/UserContext';
