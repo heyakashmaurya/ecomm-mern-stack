@@ -10,7 +10,7 @@ import { ToastContainer , toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { userDataContext } from './context/UserContext'
 import About from './pages/About'
-import Collections from './pages/collections'
+import Collections from './pages/Collections'
 import Product from './pages/Product'
 import Contact from './pages/Contact'
 import Cart from './pages/Cart'
