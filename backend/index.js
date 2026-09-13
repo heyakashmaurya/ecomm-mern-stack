@@ -29,7 +29,7 @@ app.use("/api/user", userRoutes)
 app.use("/api/product", productRoutes)
 app.use("/api/cart", cartRoutes)
 app.use("/api/order", orderRoutes)
-app.use("/api/health", (req,res) ={
+app.use("/api/health", (req,res) =>{
     res.status(200).json(" Ecommerce backend Running Successfully " )
 } )
 
